@@ -1,0 +1,264 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LeBron Trivia Game</title>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #041E42;
+    color: #FDBB30;
+    margin: 0;
+    text-align: center;
+  }
+
+  h1 {
+    background: #6F263D;
+    color: white;
+    padding: 20px;
+    margin: 0;
+  }
+
+  #return-btn {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    padding: 10px 15px;
+    background: #6F263D;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  #return-btn:hover {
+    background: #8c2f4f;
+  }
+
+  .container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #progress-container {
+    width: 80%;
+    background: #ccc;
+    margin: 20px auto;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  #progress-bar {
+    height: 18px;
+    width: 0%;
+    background: #6F263D;
+    transition: 0.3s;
+  }
+
+  .question {
+    font-size: 1.5em;
+    margin: 20px 0;
+  }
+
+  .answers button {
+    display: block;
+    width: 60%;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #FDBB30;
+    color: #041E42;
+  }
+
+  .answers button:hover {
+    background: #e0a800;
+  }
+
+  .correct {
+    background: #2ecc71 !important;
+    color: white;
+  }
+
+  .wrong {
+    background: #e74c3c !important;
+    color: white;
+  }
+
+  #image {
+    display: block;
+    margin: 15px auto;
+    max-width: 320px;
+    border-radius: 10px;
+  }
+
+  #next-btn, #restart-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #6F263D;
+    color: white;
+    display: none;
+  }
+
+  #next-btn:hover, #restart-btn:hover {
+    background: #8c2f4f;
+  }
+
+  #score {
+    font-size: 1.4em;
+    margin-top: 20px;
+  }
+</style>
+</head>
+
+<body>
+
+<button id="return-btn" onclick="goBack()">
+  Return to Playoff Page
+</button>
+
+<h1>LeBron James Trivia 🏀</h1>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<div class="container">
+
+  <img id="image" src="" alt="">
+
+  <div id="quiz">
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+  </div>
+
+  <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+
+  <div id="score"></div>
+
+  <button id="restart-btn" onclick="restart()">Restart Game</button>
+
+</div>
+
+<script>
+const questions = [
+  {q:"What year was LeBron drafted?", a:["2001","2003","2005","2007"], c:1, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"},
+  {q:"Which team drafted LeBron?", a:["Heat","Cavaliers","Lakers","Bulls"], c:1, img:"https://cdn.nba.com/logos/nba/1610612739/primary/L/logo.svg"},
+  {q:"How many championships does LeBron have?", a:["2","3","4","5"], c:2, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"},
+  {q:"Career-high points?", a:["50","55","61","70"], c:2, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"},
+  {q:"2016 Finals opponent?", a:["Spurs","Warriors","Celtics","Raptors"], c:1, img:"https://cdn.nba.com/logos/nba/1610612744/primary/L/logo.svg"},
+  {q:"Cleveland jersey number?", a:["6","23","32","24"], c:1, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"},
+  {q:"Scoring record passed who?", a:["Jordan","Kobe","Kareem","Shaq"], c:2, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"},
+  {q:"Position commonly played?", a:["Center","PG","SF","Coach"], c:2, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"},
+  {q:"Team joined in 2010?", a:["Lakers","Heat","Warriors","Knicks"], c:1, img:"https://cdn.nba.com/logos/nba/1610612748/primary/L/logo.svg"},
+  {q:"Nickname?", a:["King James","Air James","LBJ","The Goat"], c:0, img:"https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"}
+];
+
+let i = 0;
+let score = 0;
+let locked = false;
+
+function loadQ(){
+  locked = false;
+
+  const q = questions[i];
+  document.getElementById("question").textContent = q.q;
+
+  const box = document.getElementById("answers");
+  box.innerHTML = "";
+
+  document.getElementById("image").src = q.img;
+
+  q.a.forEach((text, idx)=>{
+    const b = document.createElement("button");
+    b.textContent = text;
+
+    b.onclick = ()=>{
+      if(locked) return;
+      locked = true;
+
+      const buttons = box.querySelectorAll("button");
+
+      buttons.forEach((btn, j)=>{
+        if(j === q.c) btn.classList.add("correct");
+        if(j === idx && idx !== q.c) btn.classList.add("wrong");
+      });
+
+      if(idx === q.c) score++;
+
+      document.getElementById("next-btn").style.display = "inline-block";
+    };
+
+    box.appendChild(b);
+  });
+
+  updateBar();
+  document.getElementById("next-btn").style.display = "none";
+}
+
+function updateBar(){
+  document.getElementById("progress-bar").style.width =
+    (i/questions.length)*100 + "%";
+}
+
+function nextQuestion(){
+  i++;
+  if(i < questions.length){
+    loadQ();
+  } else {
+    finish();
+  }
+}
+
+function finish(){
+  document.getElementById("quiz").innerHTML = "";
+
+  let pct = Math.round((score/questions.length)*100);
+  let msg = score > 5 ? "Good Job!" : "Better Luck Next Time";
+
+  document.getElementById("score").innerHTML =
+    `Final Score: ${score}/10 (${pct}%)<br><strong>${msg}</strong>`;
+
+  document.getElementById("progress-bar").style.width = "100%";
+  document.getElementById("restart-btn").style.display = "inline-block";
+}
+
+function restart(){
+  i = 0;
+  score = 0;
+  locked = false;
+
+  document.getElementById("score").innerHTML = "";
+  document.getElementById("restart-btn").style.display = "none";
+
+  document.getElementById("quiz").innerHTML = `
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers"></div>
+  `;
+
+  document.getElementById("progress-bar").style.width = "0%";
+
+  loadQ();
+}
+
+function goBack(){
+  window.location.href = "nba-playoffs.html";
+}
+
+loadQ();
+</script>
+
+</body>
+</html>
+
+

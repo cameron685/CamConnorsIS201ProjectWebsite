@@ -1,0 +1,478 @@
+/* =========================================
+   NBA PLAYOFFS 2026 — Custom Stylesheet
+   ========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;1,400&family=Barlow:wght@400;500&display=swap');
+
+/* ---- CSS Variables ---- */
+:root {
+  --court:    #0d0d0d;
+  --hardwood: #1a1108;
+  --stripe:   #1c1c1c;
+  --gold:     #f5b800;
+  --gold-dim: rgba(245, 184, 0, 0.18);
+  --gold-glow:rgba(245, 184, 0, 0.45);
+  --red:      #c8102e;
+  --white:    #f0ece2;
+  --gray:     #8a8a7a;
+  --font-display: 'Bebas Neue', 'Impact', sans-serif;
+  --font-cond:    'Barlow Condensed', sans-serif;
+  --font-body:    'Barlow', sans-serif;
+}
+
+/* ---- Reset & Base ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--court);
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 119px,
+      rgba(255,255,255,0.025) 120px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.018) 60px
+    );
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ========================================
+   NAVIGATION
+   ======================================== */
+#nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 14px 24px;
+  background: rgba(10, 10, 10, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid var(--gold);
+}
+
+#nav-bar a {
+  font-family: var(--font-cond);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+#nav-bar a:hover { color: var(--gold); }
+
+#nav-bar .logo-text {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+  margin-right: 16px;
+  text-shadow: 0 0 20px var(--gold-glow);
+}
+
+/* ========================================
+   DIV 1 — HERO HEADER BLOCK
+   ======================================== */
+#div-hero {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  padding: 90px 20px 80px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(245,184,0,0.12) 0%, transparent 60%),
+    linear-gradient(180deg, rgba(200,16,46,0.08) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(245,184,0,0.2);
+}
+
+/* Diagonal stripe accent */
+#div-hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -80px;
+  width: 340px; height: 340px;
+  border: 40px solid rgba(245,184,0,0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#div-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -60px;
+  width: 260px; height: 260px;
+  border: 30px solid rgba(200,16,46,0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+#div-hero .eyebrow {
+  font-family: var(--font-cond);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 14px;
+  animation: fadeUp 0.6s ease both;
+}
+
+#div-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 12vw, 10rem);
+  line-height: 0.92;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  text-shadow: 0 0 60px rgba(245,184,0,0.25), 4px 4px 0 rgba(200,16,46,0.4);
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+
+#div-hero h1 span { color: var(--gold); }
+
+#div-hero .subtitle {
+  font-family: var(--font-cond);
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--gray);
+  margin-top: 18px;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+
+#div-hero .badge-row {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 36px;
+  animation: fadeUp 0.7s 0.3s ease both;
+}
+
+#div-hero .badge {
+  padding: 7px 22px;
+  border: 1px solid var(--gold);
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   DIV 2 — MAIN CONTENT BLOCK
+   ======================================== */
+#div-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+/* Section headings */
+#div-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin: 70px 0 6px;
+  line-height: 1;
+}
+
+#div-content h2 .accent { color: var(--gold); }
+
+.section-rule {
+  width: 60px;
+  height: 3px;
+  background: var(--red);
+  margin-bottom: 24px;
+}
+
+#div-content h3 {
+  font-family: var(--font-cond);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 32px 0 10px;
+}
+
+#div-content p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: #b8b4a8;
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+/* ---- Hero image ---- */
+.hero-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-left: 4px solid var(--gold);
+  margin: 28px 0;
+  filter: contrast(1.05) saturate(0.85);
+  box-shadow: 0 12px 60px rgba(0,0,0,0.7);
+}
+
+/* ---- Seedings: nested list layout ---- */
+ol.seeds-list {
+  list-style: none;
+  counter-reset: seed-counter;
+  padding: 0;
+  margin: 24px 0;
+}
+
+ol.seeds-list > li {
+  counter-increment: seed-counter;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 16px 68px;
+  margin-bottom: 10px;
+  background: var(--stripe);
+  border-left: 3px solid var(--gold);
+  transition: background 0.2s;
+}
+
+ol.seeds-list > li:hover { background: #222; }
+
+ol.seeds-list > li::before {
+  content: counter(seed-counter);
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: rgba(245,184,0,0.3);
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+ol.seeds-list > li strong {
+  font-family: var(--font-cond);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+ol.seeds-list > li.top-seed { border-left-color: var(--gold); }
+ol.seeds-list > li.play-in  { border-left-color: var(--gray); opacity: 0.75; }
+
+ul.detail-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+}
+
+ul.detail-list li {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--gray);
+  padding-left: 14px;
+  position: relative;
+}
+
+ul.detail-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--red);
+  font-size: 0.7rem;
+  top: 3px;
+}
+
+/* ---- Matchup cards ---- */
+.matchup-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+
+.matchup-card {
+  background: var(--stripe);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.matchup-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+}
+
+.matchup-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.matchup-card .round-label {
+  font-family: var(--font-cond);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+
+.matchup-card .teams {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  line-height: 1.1;
+}
+
+.matchup-card .teams .vs {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  color: var(--gray);
+  margin: 0 8px;
+}
+
+.matchup-card .record {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--gray);
+  margin-top: 8px;
+}
+
+.matchup-card .series-seed {
+  position: absolute;
+  top: 14px; right: 14px;
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  color: rgba(245,184,0,0.1);
+}
+
+/* ---- Blockquote ---- */
+blockquote {
+  border-left: 4px solid var(--red);
+  margin: 28px 0;
+  padding: 14px 22px;
+  background: rgba(200,16,46,0.05);
+  font-style: italic;
+  color: #9a9688;
+  font-family: var(--font-body);
+}
+
+/* ---- On-page anchor flash ---- */
+:target { scroll-margin-top: 70px; animation: flash-in 1.2s ease-out; }
+@keyframes flash-in {
+  0%  { background: rgba(245,184,0,0.07); }
+  100%{ background: transparent; }
+}
+
+/* ========================================
+   DIV 3 — MEDIA BLOCK
+   ======================================== */
+#div-media {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+#div-media h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin: 70px 0 6px;
+  line-height: 1;
+}
+
+#div-media h2 .accent { color: var(--gold); }
+
+.embed-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin-top: 24px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(245,184,0,0.2);
+  box-shadow: 0 12px 60px rgba(0,0,0,0.7);
+}
+
+.embed-wrapper iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:none; }
+
+.tableau-wrapper {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(245,184,0,0.2);
+  margin-top: 24px;
+  margin-bottom: 10px;
+  box-shadow: 0 12px 60px rgba(0,0,0,0.7);
+  background: #fff;
+}
+
+.embed-caption {
+  font-family: var(--font-cond);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--gray);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+/* ---- Footer ---- */
+#footer {
+  text-align: center;
+  padding: 36px 20px;
+  border-top: 2px solid var(--gold);
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+#footer a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+#footer a:hover { color: #fff; }
+
+/* ---- Responsive ---- */
+@media (max-width: 600px) {
+  #nav-bar { gap: 14px; flex-wrap: wrap; }
+  .matchup-grid { grid-template-columns: 1fr; }
+}
